@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>MPData</title>
+  <meta name="description" content="MPData">
+  <meta name="author" content="Jesse Mortenson">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/mpdata.css">
+
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns masthead">
+        <h1>Officer Counts /<a href="index.html">mpdata</a></h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <div id="chart"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four columns">
+        <h5>Highlights</h5>
+        <ul>
+          <li><a href="#"></a></li>
+        </ul>
+      </div>
+
+      <div class="eight columns">
+        <h4>How many serve? How many patrol?</h4>
+        <p>It's not an easy question to answer. The number of <em>sworn officers</em> is not the same as the number
+        of officers who patrol or respond to 911 calls. The sworn officers number is typically lower than the
+        <em>budgeted</em> number. Especially amidst reports of officers taking leave, claiming disability, quitting
+        the department: it's hard to get a clear picture of how many officers Minneapolis pays and what they do.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <h5>Citations</h5>
+        <ul>
+          <li><a href="#"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3-time.v2.min.js"></script>
+  <script type="text/javascript">
+    const data = [
+      { x: '2020-07-17', y: 850, tag: 'claimed', label: 'Strib reporting'},
+      // { x: '2020-07-17', y: 200, tag: 'disability'},
+      { x: '2020-01-01', y: 902, tag: 'budget', label: 'Adopted budget #'},
+      { x: '2025-01-01', y: 1300, tag: 'rondo-plan', label: 'Chief Rondo\'s request'},
+      { x: '2019-10-01', y: 888, tag: 'claimed', label: 'Strib reporting'},
+      { x: '2016-12-01', y: 896, tag: 'claimed', label: 'Public payroll data'},
+      { x: '2008-07-01', y: 916, tag: 'claimed', label: 'Strib reported peak #'}
+    ];
+    const width = 700;
+    const height = 500;
+    const parseDate = d3.isoParse;
+    const dateParsedData = data.map(d => ({...d, x: parseDate(d.x)}));
+
+    const margin = {
+      top: 40,
+      right: 40,
+      bottom: 40,
+      left: 40
+    };
+
+    const x = d3.scaleTime()
+      .domain([
+        d3.timeDay.floor(d3.min(dateParsedData, d => d.x)),
+        d3.timeDay.ceil(d3.max(dateParsedData, d => d.x))
+      ])
+      .rangeRound([margin.left, width - margin.right])
+      .nice()
+    const y = d3.scaleLinear()
+      .domain([1000, 800])
+      .rangeRound([margin.top, height - margin.bottom])
+    const xAxis = d3.axisBottom()
+      .scale(x);
+    const yAxis = d3.axisLeft(y)
+
+    const chart = d3.select("#chart");
+    const svg = chart.append("svg")
+      .attr("width", '100%') // width + margin.left + margin.right)
+      .attr("height", '100%') // height + margin.top + margin.bottom)
+      .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom]);
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis.ticks(null).tickSize(0))
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .attr('transform', `translate(${margin.left},0)`)
+
+
+    const gdots = svg.selectAll("g.dot")
+      .data(dateParsedData)
+      .enter()
+      .append('g')
+      .attr('class', 'datapoint');
+
+    gdots.append("circle")
+      .attr("class", "dot")
+      .attr("r", function (d) {
+        return 10;
+      })
+      .attr("cx", function (d) {
+        return x(d.x);
+      })
+      .attr("cy", function (d) {
+        return y(d.y);
+      })
+      .style("fill", function (d) {
+        if (d.tag === 'budget') {
+          return '#ABDAE1';
+        } else if (d.tag === 'disability') {
+          return '#987D7C';
+        } else if (d.tag === 'rondo-plan') {
+          return '$A09CB0';
+        } else {
+          return '#A3B9C9';
+        }
+      });
+    gdots.append("text").text(function(d){
+      return d.label;
+    })
+      .attr("x", function (d) {
+        return x(d.x);
+      })
+      .attr("y", function (d) {
+        return y(d.y);
+      });
+  </script>
+</body>
+</html>

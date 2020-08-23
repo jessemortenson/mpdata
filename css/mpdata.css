@@ -1,13 +1,29 @@
+/* Template */
+.masthead a, .masthead a:visited {
+    color: #666;
+}
+
+
+/* Frontpage */
 .receipt-content {
     padding: 2rem 0;
     background: url("../images/receipt_bg_large.png");
     background-size: cover;
     text-align: center;
     font-family: 'VT323', monospace;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: rgba(29, 29, 39, 0.9);
 }
 .receipt-content a {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.9);
+}
+
+
+/* Chart */
+.datapoint:hover {
+    cursor: pointer;
+}
+.datapoint:hover .dot {
+    opacity: .6;
 }
