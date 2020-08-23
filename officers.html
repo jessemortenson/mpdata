@@ -38,7 +38,18 @@
       <div class="four columns">
         <h5>Highlights</h5>
         <ul>
-          <li><a href="#"></a></li>
+          <li>Officer exodus? Claims exist that
+            <a href="https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/" target="_blank">
+              as many as 200 officers
+            </a>
+            are leaving or claiming disability. Yet as of 8/21 officials still claim
+            <a href="https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job" target="_blank">
+              856 officers employed
+            </a>
+            .
+          </li>
+          <li>Chief Rondo's request for 1300 officers by 2025 is a big outlier</li>
+          <li>The reported peak number of officers was 916 in 2008</li>
         </ul>
       </div>
 
@@ -55,7 +66,36 @@
       <div class="twelve columns">
         <h5>Citations</h5>
         <ul>
-          <li><a href="#"></a></li>
+          <li>
+            2025 Rondo Plan (submitted Fall 2019)
+            <a href="https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/" target="_blank">#1</a>
+          </li>
+          <li>
+            Summer 2020
+            <a href="https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/" target="_blank">#1</a>
+            <a href="https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job" target="_blank">#2</a>
+          </li>
+          <li>
+            2020 Adopted Budget
+            <a href="https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/" target="_blank">#1</a>
+          </li>
+          <li>
+            Fall 2019
+            <a href="https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/" target="_blank">#1</a>
+            <a href="https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/" target="_blank">#2</a>
+          </li>
+          <li>
+            2016 aggregated from
+            <a href="https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976" target="_blank">payroll data</a>
+            (including:    Police Commander-C (8), Police Inspector-C (5), Police Lieutenant-C (45),
+            Police Sergeant-C (203), Police Officer-C (548), Police Cadet-C (23), Police Officer b-C (59)
+            Chief of Police-C, Assistant Chief of Police-C, Police Deputy Chief Investgn-C,
+            Police Deputy Chief of Staff-C (4))
+          </li>
+          <li>
+            2008
+            <a href="https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/" target="_blank">#1</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -65,13 +105,14 @@
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
   <script type="text/javascript">
     const data = [
-      { x: '2020-07-17', y: 850, tag: 'claimed', label: 'Strib reporting'},
-      // { x: '2020-07-17', y: 200, tag: 'disability'},
-      { x: '2020-01-01', y: 902, tag: 'budget', label: 'Adopted budget #'},
-      { x: '2025-01-01', y: 1300, tag: 'rondo-plan', label: 'Chief Rondo\'s request'},
-      { x: '2019-10-01', y: 888, tag: 'claimed', label: 'Strib reporting'},
-      { x: '2016-12-01', y: 896, tag: 'claimed', label: 'Public payroll data'},
-      { x: '2008-07-01', y: 916, tag: 'claimed', label: 'Strib reported peak #'}
+      { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
+      { x: '2020-08-21', y: 856, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+      { x: '2020-07-17', y: 850, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
+      { x: '2020-07-17', y: 650, tag: 'disability', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
+      { x: '2020-01-01', y: 902, tag: 'budgeted', label: 'Adopted budget #', url: 'https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/'},
+      { x: '2019-10-01', y: 888, tag: 'reported', label: 'Reported', url: 'https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/'},
+      { x: '2016-12-01', y: 896, tag: 'reported', label: 'Public payroll data', url: 'https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976'},
+      { x: '2008-07-01', y: 916, tag: 'reported', label: 'Reported all-time peak', url: 'https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/'}
     ];
     const width = 700;
     const height = 500;
@@ -93,7 +134,7 @@
       .rangeRound([margin.left, width - margin.right])
       .nice()
     const y = d3.scaleLinear()
-      .domain([1000, 800])
+      .domain([1350, 600])
       .rangeRound([margin.top, height - margin.bottom])
     const xAxis = d3.axisBottom()
       .scale(x);
@@ -120,12 +161,17 @@
       .data(dateParsedData)
       .enter()
       .append('g')
-      .attr('class', 'datapoint');
+        .attr('class', 'datapoint')
+      .append("a")
+        .attr("href", function(d) {
+          return d.url;
+        })
+        .attr("target", "_blank");
 
     gdots.append("circle")
       .attr("class", "dot")
       .attr("r", function (d) {
-        return 10;
+        return 5;
       })
       .attr("cx", function (d) {
         return x(d.x);
@@ -134,24 +180,26 @@
         return y(d.y);
       })
       .style("fill", function (d) {
-        if (d.tag === 'budget') {
-          return '#ABDAE1';
+        if (d.tag === 'budgeted') {
+          return '#60885E';
         } else if (d.tag === 'disability') {
           return '#987D7C';
-        } else if (d.tag === 'rondo-plan') {
-          return '$A09CB0';
+        } else if (d.tag === 'Chief Rondo') {
+          return '#425986';
         } else {
           return '#A3B9C9';
         }
       });
-    gdots.append("text").text(function(d){
-      return d.label;
-    })
+    gdots.append("text")
+      .text(function(d){
+        return `${d.y} (${d.tag})`;
+      })
+      .attr("class", "datapoint-label")
       .attr("x", function (d) {
-        return x(d.x);
+        return x(d.x) + 10;
       })
       .attr("y", function (d) {
-        return y(d.y);
+        return y(d.y) + 4;
       });
   </script>
 </body>

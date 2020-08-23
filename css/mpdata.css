@@ -11,12 +11,24 @@
     background-size: cover;
     text-align: center;
     font-family: 'VT323', monospace;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: rgba(29, 29, 39, 0.9);
 }
 .receipt-content a {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.9);
+}
+.receipt-content a:hover {
+    color: #0FA0CE;
+    text-decoration: underline;
+}
+@media only screen and (max-width: 600px) {
+    .receipt-content {
+        font-size: 1.5rem;
+    }
+}
+.entry {
+    margin: 6rem 0;
 }
 
 
@@ -24,6 +36,12 @@
 .datapoint:hover {
     cursor: pointer;
 }
+.datapoint:hover text {
+    color: #0FA0CE;
+}
 .datapoint:hover .dot {
     opacity: .6;
+}
+.datapoint-label {
+    color: red;
 }
