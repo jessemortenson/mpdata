@@ -46,11 +46,21 @@
     color: red;
 }
 .zoomtangle {
-    stroke: #A3B9C9; stroke-width: 2; fill-opacity: 0;
+    cursor: pointer;
+}
+.zoomtangle rect {
+    stroke: #A3B9C9;
+    stroke-width: 2;
+    fill: #666;
+    fill-opacity: 0.2;
+}
+.zoomtangle:hover rect {
+    stroke: #987D7C;
+    fill-opacity: 0.1;
 }
 .zoomtangle-label {
     color: #A3B9C9;
 }
-.zoomtangle-label: hover {
-    color:
+.zoomtangle:hover .zoomtangle-label {
+    color: #987D7C;
 }

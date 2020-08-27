@@ -104,122 +104,155 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
   <script type="text/javascript">
-    const data = [
-      { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
-      { x: '2020-08-21', y: 743, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
-      { x: '2020-08-21', y: 856, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
-      { x: '2020-07-17', y: 850, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
-      { x: '2020-07-17', y: 650, tag: 'disability', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
-      { x: '2020-01-01', y: 902, tag: 'budgeted', label: 'Adopted budget #', url: 'https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/'},
-      { x: '2019-10-01', y: 888, tag: 'reported', label: 'Reported', url: 'https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/'},
-      { x: '2016-12-01', y: 896, tag: 'reported', label: 'Public payroll data', url: 'https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976'},
-      { x: '2008-07-01', y: 916, tag: 'reported', label: 'Reported all-time peak', url: 'https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/'}
-    ];
-    const width = 700;
-    const height = 500;
-    const parseDate = d3.isoParse;
-    const dateParsedData = data.map(d => ({...d, x: parseDate(d.x)}));
+    let zoomed = false;
+    const drawOfficerChart = () => {
+      const allData = [
+        { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
+        { x: '2020-08-21', y: 743, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+        { x: '2020-08-21', y: 856, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+        { x: '2020-07-17', y: 850, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
+        { x: '2020-07-17', y: 650, tag: 'disability', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
+        { x: '2020-01-01', y: 902, tag: 'budgeted', label: 'Adopted budget #', url: 'https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/'},
+        { x: '2019-10-01', y: 888, tag: 'reported', label: 'Reported', url: 'https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/'},
+        { x: '2016-12-01', y: 896, tag: 'reported', label: 'Public payroll data', url: 'https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976'},
+        { x: '2008-07-01', y: 916, tag: 'reported', label: 'Reported all-time peak', url: 'https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/'}
+      ];
 
-    const margin = {
-      top: 40,
-      right: 40,
-      bottom: 40,
-      left: 40
-    };
+      const data = zoomed ? allData.filter(dp => dp.x > '2019-04-01' && dp.x < '2021-01-01') : allData;
 
-    const x = d3.scaleTime()
-      .domain([
-        d3.timeDay.floor(d3.min(dateParsedData, d => d.x)),
-        d3.timeDay.ceil(d3.max(dateParsedData, d => d.x))
-      ])
-      .rangeRound([margin.left, width - margin.right])
-      .nice()
-    const y = d3.scaleLinear()
-      .domain([1350, 600])
-      .rangeRound([margin.top, height - margin.bottom])
-    const xAxis = d3.axisBottom()
-      .scale(x);
-    const yAxis = d3.axisLeft(y)
+      const width = 700;
+      const height = 500;
+      const parseDate = d3.isoParse;
+      const dateParsedData = data.map(d => ({...d, x: parseDate(d.x)}));
 
-    const chart = d3.select("#chart");
-    const svg = chart.append("svg")
-      .attr("width", '100%') // width + margin.left + margin.right)
-      .attr("height", '100%') // height + margin.top + margin.bottom)
-      .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom]);
+      const margin = {
+        top: 40,
+        right: 40,
+        bottom: 40,
+        left: 40
+      };
 
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis.ticks(null).tickSize(0))
+      const x = d3.scaleTime()
+        .domain([
+          d3.timeDay.floor(d3.min(dateParsedData, d => d.x)),
+          d3.timeDay.ceil(d3.max(dateParsedData, d => d.x))
+        ])
+        .rangeRound([margin.left, width - margin.right])
+        .nice()
+      const yMax = zoomed ? 1000 : 1350;
+      const y = d3.scaleLinear()
+        .domain([yMax, 600])
+        .rangeRound([margin.top, height - margin.bottom])
+      const xAxis = d3.axisBottom()
+        .scale(x);
+      const yAxis = d3.axisLeft(y)
 
-    svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-      .attr('transform', `translate(${margin.left},0)`)
+      const chart = d3.select("#chart");
+
+      if (zoomed) {
+        // remove the old chart
+        chart.selectAll("svg")
+          .remove();
+      }
+
+      const svg = chart.append("svg")
+        .attr("width", '100%') // width + margin.left + margin.right)
+        .attr("height", '100%') // height + margin.top + margin.bottom)
+        .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom]);
+
+      svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis.ticks(null).tickSize(0))
+
+      svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .attr('transform', `translate(${margin.left},0)`)
 
 
-    const gdots = svg.selectAll("g.dot")
-      .data(dateParsedData)
-      .enter()
-      .append('g')
-        .attr('class', 'datapoint')
-      .append("a")
-        .attr("href", function(d) {
-          return d.url;
+      const gdots = svg.selectAll("g.dot")
+        .data(dateParsedData)
+        .enter()
+        .append('g')
+          .attr('class', 'datapoint')
+          .append("a")
+            .attr("href", function (d) {
+              return d.url;
+            })
+            .attr("target", "_blank");
+
+      gdots.append("circle")
+        .attr("class", "dot")
+        .attr("r", function (d) {
+          return 5;
         })
-        .attr("target", "_blank");
+        .attr("cx", function (d) {
+          return x(d.x);
+        })
+        .attr("cy", function (d) {
+          return y(d.y);
+        })
+        .style("fill", function (d) {
+          if (d.tag === 'budgeted' || d.tag === 'charter min.') {
+            return '#60885E';
+          } else if (d.tag === 'disability') {
+            return '#987D7C';
+          } else if (d.tag === 'Chief Rondo') {
+            return '#425986';
+          } else {
+            return '#A3B9C9';
+          }
+        });
+      gdots.append("text")
+        .text(function (d) {
+          return `${d.y} (${d.tag})`;
+        })
+        .attr("class", "datapoint-label")
+        .attr("x", function (d) {
+          return x(d.x) + 10;
+        })
+        .attr("y", function (d) {
+          return y(d.y) + 4;
+        });
 
-    gdots.append("circle")
-      .attr("class", "dot")
-      .attr("r", function (d) {
-        return 5;
-      })
-      .attr("cx", function (d) {
-        return x(d.x);
-      })
-      .attr("cy", function (d) {
-        return y(d.y);
-      })
-      .style("fill", function (d) {
-        if (d.tag === 'budgeted' || d.tag === 'charter min.') {
-          return '#60885E';
-        } else if (d.tag === 'disability') {
-          return '#987D7C';
-        } else if (d.tag === 'Chief Rondo') {
-          return '#425986';
-        } else {
-          return '#A3B9C9';
-        }
-      });
-    gdots.append("text")
-      .text(function(d){
-        return `${d.y} (${d.tag})`;
-      })
-      .attr("class", "datapoint-label")
-      .attr("x", function (d) {
-        return x(d.x) + 10;
-      })
-      .attr("y", function (d) {
-        return y(d.y) + 4;
-      });
+      const zoomTangle = {
+        x: x(new Date('2016-01-01')),
+        y: y(950)
+      };
 
-    const zoomTangle = {
-      x: x(new Date('2016-01-01')),
-      y: y(950)
-    };
-    zoomTangle.width = x(new Date('2025-01-01')) - zoomTangle.x;
-    zoomTangle.height = y(600) - zoomTangle.y;
-    svg.append("rect")
-      .attr("class", "zoomtangle")
-      .attr("x", zoomTangle.x)
-      .attr("y", zoomTangle.y)
-      .attr("width", zoomTangle.width)
-      .attr("height", zoomTangle.height);
-    svg.append("text")
-      .text("Zoom")
-      .attr("class", "zoomtangle-label")
-      .attr("x", zoomTangle.x)
-      .attr("y", zoomTangle.y)
+      if (!zoomed) {
+        zoomTangle.width = x(new Date('2025-01-01')) - zoomTangle.x;
+        zoomTangle.height = y(600) - zoomTangle.y;
+        zoomTangleG = svg.append("g")
+          .attr("class", "zoomtangle")
+        zoomTangleG.append("rect")
+          .attr("class", "zoomtangle")
+          .attr("x", zoomTangle.x)
+          .attr("y", zoomTangle.y)
+          .attr("width", zoomTangle.width)
+          .attr("height", zoomTangle.height);
+        zoomTangleG.append("text")
+          .text("Click to Zoom")
+          .attr("class", "zoomtangle-label")
+          .attr("x", zoomTangle.x)
+          .attr("y", zoomTangle.y);
+
+        zoomTangleG.on("click", () => {
+          console.log('about to redraw zoomed');
+          zoomed = true;
+          drawOfficerChart();
+        });
+      }
+    }
+
+
+    // load chart when DOM is ready
+    if (document.readyState!='loading') drawOfficerChart();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawOfficerChart);
+    else document.attachEvent('onreadystatechange', function(){
+      if (document.readyState=='complete') drawOfficerChart();
+    });
   </script>
 </body>
 </html>
