@@ -3,7 +3,7 @@
 <head>
 
   <meta charset="utf-8">
-  <title>MPData</title>
+  <title>Officer Counts - Minneapolis Police Data</title>
   <meta name="description" content="MPData">
   <meta name="author" content="Jesse Mortenson">
 
@@ -109,9 +109,10 @@
       const allData = [
         { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
         { x: '2020-08-21', y: 743, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+        { x: '2020-08-14', y: 750, tag: 'disability/quit?', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/14/minneapolis-mayor-calls-for-unity-outlines-broad-plan-for-city-budget' },
         { x: '2020-08-21', y: 856, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
         { x: '2020-07-17', y: 850, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
-        { x: '2020-07-17', y: 650, tag: 'disability', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
+        { x: '2020-07-17', y: 650, tag: 'disability/quit?', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
         { x: '2020-01-01', y: 902, tag: 'budgeted', label: 'Adopted budget #', url: 'https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/'},
         { x: '2019-10-01', y: 888, tag: 'reported', label: 'Reported', url: 'https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/'},
         { x: '2016-12-01', y: 896, tag: 'reported', label: 'Public payroll data', url: 'https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976'},
@@ -196,7 +197,7 @@
         .style("fill", function (d) {
           if (d.tag === 'budgeted' || d.tag === 'charter min.') {
             return '#60885E';
-          } else if (d.tag === 'disability') {
+          } else if (d.tag === 'disability/quit?') {
             return '#987D7C';
           } else if (d.tag === 'Chief Rondo') {
             return '#425986';
