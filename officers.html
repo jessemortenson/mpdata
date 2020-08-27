@@ -202,6 +202,24 @@
       .attr("y", function (d) {
         return y(d.y) + 4;
       });
+
+    const zoomTangle = {
+      x: x(new Date('2016-01-01')),
+      y: y(950)
+    };
+    zoomTangle.width = x(new Date('2025-01-01')) - zoomTangle.x;
+    zoomTangle.height = y(600) - zoomTangle.y;
+    svg.append("rect")
+      .attr("class", "zoomtangle")
+      .attr("x", zoomTangle.x)
+      .attr("y", zoomTangle.y)
+      .attr("width", zoomTangle.width)
+      .attr("height", zoomTangle.height);
+    svg.append("text")
+      .text("Zoom")
+      .attr("class", "zoomtangle-label")
+      .attr("x", zoomTangle.x)
+      .attr("y", zoomTangle.y)
   </script>
 </body>
 </html>

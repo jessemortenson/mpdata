@@ -45,3 +45,12 @@
 .datapoint-label {
     color: red;
 }
+.zoomtangle {
+    stroke: #A3B9C9; stroke-width: 2; fill-opacity: 0;
+}
+.zoomtangle-label {
+    color: #A3B9C9;
+}
+.zoomtangle-label: hover {
+    color:
+}
