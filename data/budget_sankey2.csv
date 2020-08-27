@@ -1,0 +1,33 @@
+Tier 1,Tier 2,Tier 3,Amount
+Patrol,Salary,Salary,57
+Patrol,Benefits,"FICA, Health & Dental",11
+Patrol,Benefits,Pension,10
+Patrol,Benefits,Worker’s Comp,2
+Patrol,Benefits,Other,1
+Patrol,Contractual services,IT (Internal Services),5
+Patrol,Contractual services,Rent,3
+Patrol,Contractual services,Fleet (Internal Services),2
+Patrol,Contractual services,Intergovernmental Expenses,2
+Patrol,Contractual services,Other,4
+Patrol,Overtime,Overtime,3
+Patrol,Operating Costs,Other,6
+Patrol,Other,Other,1
+Investigations,Salary,Salary,23
+Investigations,Benefits,"FICA, Health & Dental",4
+Investigations,Benefits,Pension,4
+Investigations,Benefits,Other,1
+Investigations,Contractual services,IT (Internal Services),2
+Investigations,Contractual services,Rent,1
+Investigations,Contractual services,Fleet (Internal Services),1
+Investigations,Contractual services,Other,1
+Investigations,Overtime,Overtime,2
+Admin & Professional Standards,Salary,Salary,15
+Admin & Professional Standards,Benefits,"FICA, Health & Dental",3
+Admin & Professional Standards,Benefits,Pension,2
+Admin & Professional Standards,Benefits,Other,1
+Admin & Professional Standards,Contractual services,Other,5
+Admin & Professional Standards,Operating Costs,Training & Education,5
+Admin & Professional Standards,Operating Costs,Self-insurance Premium,0.8
+Admin & Professional Standards,Operating Costs,Office Supplies,0.6
+Strategic Information Management,Strategic Information Management,Strategic Information Management,10
+Other,Other,Other,5
