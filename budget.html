@@ -33,6 +33,11 @@
             <div id="chart"></div>
         </div>
     </div>
+    <div class="row">
+        <div class="twelve columns chart-title">
+            <h6><em>2020 Police Department Budget as Adopted in 2019</em></h6>
+        </div>
+    </div>
 
     <div class="row">
         <div class="four columns">
@@ -78,43 +83,23 @@
         </div>
     </div>
 
-<!--    <div class="row">-->
-<!--        <div class="twelve columns">-->
-<!--            <h5>Citations</h5>-->
-<!--            <ul>-->
-<!--                <li>-->
-<!--                    2025 Rondo Plan (submitted Fall 2019)-->
-<!--                    <a href="https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/" target="_blank">#1</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    Summer 2020-->
-<!--                    <a href="https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/" target="_blank">#1</a>-->
-<!--                    <a href="https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job" target="_blank">#2</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    2020 Adopted Budget-->
-<!--                    <a href="https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/" target="_blank">#1</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    Fall 2019-->
-<!--                    <a href="https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/" target="_blank">#1</a>-->
-<!--                    <a href="https://minnesota.cbslocal.com/2019/10/15/how-many-police-officers-should-a-city-have/" target="_blank">#2</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    2016 aggregated from-->
-<!--                    <a href="https://www.muckrock.com/foi/minneapolis-1607/city-employee-salary-information-minneapolis-20925/#comm-409976" target="_blank">payroll data</a>-->
-<!--                    (including:    Police Commander-C (8), Police Inspector-C (5), Police Lieutenant-C (45),-->
-<!--                    Police Sergeant-C (203), Police Officer-C (548), Police Cadet-C (23), Police Officer b-C (59)-->
-<!--                    Chief of Police-C, Assistant Chief of Police-C, Police Deputy Chief Investgn-C,-->
-<!--                    Police Deputy Chief of Staff-C (4))-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    2008-->
-<!--                    <a href="https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/" target="_blank">#1</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="row">
+        <div class="twelve columns">
+            <h5>Citations</h5>
+            <ul>
+                <li>
+                    Chart at top generated from <a href="data/budget_sankey2.csv">aggregated numbers</a> compiled from
+                    the 2020 Minneapolis City Budget Explorer <strong>prior to</strong> Aug updates. It represents the
+                    2020 Police Department budget as originally adopted.
+                </li>
+                <li>
+                    <a href="https://minneapolismn.opengov.com/transparency#/35901/accountType=expenses&embed=n&breakdown=ee076d02-de82-4b3b-9f8e-4a4c99429caf&currentYearAmount=cumulative&currentYearPeriod=years&graph=stacked&legendSort=desc&proration=true&saved_view=null&selection=DF9E2D0B81BDAC88F2AD80E47F3C2946&projections=null&projectionType=null&highlighting=null&highlightingVariance=null&year=2020&selectedDataSetIndex=null&fiscal_start=earliest&fiscal_end=latest" target="_blank">
+                        2020 Minneapolis City Budget Explorer
+                    </a> now displays the 2020 budget as revised in July.
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -144,7 +129,6 @@
       const prefix = keys.slice(0, i + 1);
       const linkByKey = new Map;
       for (const d of data) {
-        console.log('d of data', d);
         const names = prefix.map(k => d[k]);
         const key = JSON.stringify(names);
         const value = Number.parseInt(d.Amount) || 1;
@@ -178,7 +162,6 @@
       const width = 975;
 
       const nodesAndLinks = getNodesAndLinks(keys, data);
-      console.log(nodesAndLinks);
 
       const sankey = d3.sankey()
           .nodeSort(null)
@@ -186,15 +169,14 @@
           .nodeWidth(4)
           .nodePadding(20)
           .extent([[0, 5], [width, height - 5]]);
-
-      const chart = d3.select("#chart");
-      const svg = chart.append("svg")
-          .attr("viewBox", [0, 0, width, height]);
-
       const {nodes, links} = sankey({
         nodes: nodesAndLinks.nodes.map(d => Object.assign({}, d)),
         links: nodesAndLinks.links.map(d => Object.assign({}, d))
       });
+
+      const chart = d3.select("#chart");
+      const svg = chart.append("svg")
+          .attr("viewBox", [0, 0, width, height]);
 
       svg.append("g")
           .selectAll("rect")
@@ -205,7 +187,7 @@
           .attr("height", d => d.y1 - d.y0)
           .attr("width", d => d.x1 - d.x0)
           .append("title")
-              .text(d => `${d.name}\n${d.value.toLocaleString()}`);
+              .text(d => `${d.name}\n$${d.value.toLocaleString()}m`);
 
       svg.append("g")
           .attr("fill", "none")
@@ -217,21 +199,23 @@
           .attr("stroke-width", d => d.width)
           .style("mix-blend-mode", "multiply")
           .append("title")
-              .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}`);
+              .text(d => `${d.names.join(" → ")}\n$${d.value.toLocaleString()}m`);
 
       svg.append("g")
-          .style("font", "10px sans-serif")
+          // .style("font", "10px sans-serif")
           .selectAll("text")
           .data(nodes)
           .join("text")
+              .attr("class", "sankey-label")
               .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
               .attr("y", d => (d.y1 + d.y0) / 2)
               .attr("dy", "0.35em")
               .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
               .text(d => d.name)
               .append("tspan")
+                  .attr("class", "sankey-label-amount")
                   .attr("fill-opacity", 0.7)
-                  .text(d => ` ${d.value.toLocaleString()}`);
+                  .text(d => ` $${d.value.toLocaleString()}m`);
     })
   }
 

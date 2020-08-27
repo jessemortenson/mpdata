@@ -45,6 +45,7 @@
 .datapoint-label {
     color: red;
 }
+
 .zoomtangle {
     cursor: pointer;
 }
@@ -63,4 +64,8 @@
 }
 .zoomtangle:hover .zoomtangle-label {
     color: #987D7C;
+}
+
+.sankey-label {
+    font-weight: bold;
 }
