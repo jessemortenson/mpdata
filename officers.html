@@ -24,7 +24,13 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns masthead">
-        <h1>Officer Counts /<a href="index.html">mpdata</a></h1>
+        <h1>Officer Counts /<a href="#" class="nav-activator">menu</a></h1>
+        <nav>
+          <ul role="navigation">
+            <li><h3><a href="index.html">Home</a></h3></li>
+            <li><h3><a href="budget.html">Budget</a></h3></li>
+          </ul>
+        </nav>
       </div>
     </div>
 
@@ -101,6 +107,7 @@
     </div>
   </div>
 
+  <script src="js/mpdata.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
   <script type="text/javascript">
@@ -127,7 +134,7 @@
       const dateParsedData = data.map(d => ({...d, x: parseDate(d.x)}));
 
       const margin = {
-        top: 40,
+        top: 0,
         right: 40,
         bottom: 40,
         left: 40
@@ -210,7 +217,6 @@
       const notSameDatum = (d, otherD) => otherD.x !== d.x || otherD.y !== d.y;
       const reduceTextOverlapFactory = (d) => (foundY, otherD) => {
         if (textLikelyOverlaps(d, otherD) && notSameDatum(d, otherD)) {
-          console.log('overlap', otherD.y, d.y);
           return (otherD.y > d.y) ? y(d.y) + 6 : y(d.y) - 6;
         }
         return foundY;
@@ -251,7 +257,6 @@
           .attr("y", zoomTangle.y);
 
         zoomTangleG.on("click", () => {
-          console.log('about to redraw zoomed');
           zoomed = true;
           drawOfficerChart();
         });
@@ -260,10 +265,10 @@
 
 
     // load chart when DOM is ready
-    if (document.readyState!='loading') drawOfficerChart();
+    if (document.readyState!=='loading') drawOfficerChart();
     else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawOfficerChart);
     else document.attachEvent('onreadystatechange', function(){
-      if (document.readyState=='complete') drawOfficerChart();
+      if (document.readyState==='complete') drawOfficerChart();
     });
   </script>
 </body>

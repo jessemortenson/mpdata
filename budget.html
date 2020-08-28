@@ -24,7 +24,13 @@
 <div class="container">
     <div class="row">
         <div class="twelve columns masthead">
-            <h1>Budgets /<a href="index.html">mpdata</a></h1>
+            <h1>Budgets /<a href="#" class="nav-activator">menu</a></h1>
+            <nav>
+                <ul role="navigation">
+                    <li><h3><a href="index.html">Home</a></h3></li>
+                    <li><h3><a href="officers.html">Officers</a></h3></li>
+                </ul>
+            </nav>
         </div>
     </div>
 
@@ -102,6 +108,7 @@
     </div>
 </div>
 
+<script src="js/mpdata.js"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://unpkg.com/d3-sankey@0"></script>
 <script type="text/javascript">
@@ -220,10 +227,10 @@
   }
 
   // load chart when DOM is ready
-  if (document.readyState!='loading') drawBudgetChart();
+  if (document.readyState!=='loading') drawBudgetChart();
   else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawBudgetChart);
   else document.attachEvent('onreadystatechange', function(){
-      if (document.readyState=='complete') drawBudgetChart();
+      if (document.readyState==='complete') drawBudgetChart();
     });
 </script>
 </body>
