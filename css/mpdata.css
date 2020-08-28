@@ -21,6 +21,17 @@ nav ul {
         margin: 0 0 0 1rem;
     }
 }
+.first-col {
+    margin-top: 5%;
+}
+.second-col {
+    margin-top: 10%
+}
+@media only screen and (min-width: 550px) {
+    .first-col, .second-col {
+        margin-top: 5%
+    }
+}
 
 /* Frontpage */
 .receipt-content {
@@ -44,6 +55,9 @@ nav ul {
     .receipt-content {
         font-size: 2rem;
     }
+}
+.progress {
+    margin-top: 20%;
 }
 .entry {
     margin: 6rem 0;
