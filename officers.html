@@ -205,6 +205,16 @@
             return '#A3B9C9';
           }
         });
+
+      const textLikelyOverlaps = (d, otherD) => Math.abs(x(otherD.x) - x(d.x)) < 70 && Math.abs(y(otherD.y) - y(d.y)) < 20;
+      const notSameDatum = (d, otherD) => otherD.x !== d.x || otherD.y !== d.y;
+      const reduceTextOverlapFactory = (d) => (foundY, otherD) => {
+        if (textLikelyOverlaps(d, otherD) && notSameDatum(d, otherD)) {
+          console.log('overlap', otherD.y, d.y);
+          return (otherD.y > d.y) ? y(d.y) + 6 : y(d.y) - 6;
+        }
+        return foundY;
+      }
       gdots.append("text")
         .text(function (d) {
           return `${d.y} (${d.tag})`;
@@ -214,7 +224,8 @@
           return x(d.x) + 10;
         })
         .attr("y", function (d) {
-          return y(d.y) + 4;
+          const adjustedY = dateParsedData.reduce(reduceTextOverlapFactory(d), y(d.y));
+          return adjustedY + 4;
         });
 
       const zoomTangle = {
