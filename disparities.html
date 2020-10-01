@@ -29,7 +29,7 @@
                 <ul role="navigation">
                     <li><h3><a href="index.html">Home</a></h3></li>
                     <li><h3><a href="officers.html">Officers</a></h3></li>
-                    <li><h3><a href="budget.html">Officers</a></h3></li>
+                    <li><h3><a href="budget.html">Budget</a></h3></li>
                 </ul>
             </nav>
         </div>
@@ -54,12 +54,34 @@
                     are imposed on Black or East African people</li>
                 <li><a href="https://www.startribune.com/black-drivers-make-up-majority-of-minneapolis-police-searches-during-routine-traffic-stops/572029792/" target="_blank">78% of vehicle searches</a>
                     are imposed on Black or East African people</li>
+                <li><a href="https://www.startribune.com/minneapolis-cops-halt-marijuana-stings-after-almost-all-arrested-were-black/484876151/" target="_blank">
+                    Almost all targets of low-level marijuana stings</a> in early 2018 were Black
+                </li>
+                <li><a href="https://www.nytimes.com/2020/05/27/us/minneapolis-police.html" target="_blank">60% of MPD shooting victims are Black.</a></li>
             </ul>
         </div>
 
         <div class="eight columns">
             <h4>Policing in Minneapolis produces starkly racialized disparities in criminalization</h4>
-            <p></p>
+            <p>Many have extensively documented racial disparities in both the outcomes and practices of policing in the US, prominent
+            among them Michelle Alexander's <a href="https://newjimcrow.com/" target="_blank">The New Jim Crow</a> and Ava DuVernay's documentary
+                <a href="https://www.netflix.com/title/80091741" target="_blank">13th</a>. Racist politics and thinking
+            shaped the course of imagining policing and criminal justice systems, from
+                <a href="https://www.mpd150.com/wp-content/uploads/reports/report_2_compressed.pdf">slave-catching patrols</a>
+                to <a href="https://www.history.com/news/kkk-birth-of-a-nation-film" target="_blank">Woodrow Wilson showing "Birth of a Nation" in the White House</a>
+                to <a href="https://www.youtube.com/watch?v=j0uCrA7ePno" target="_blank">Clinton's "super predators" rhetoric</a>
+                accompanying her call for "community policing" and beyond. In that history, to talk about "disparity" may
+            even be misleading: can we even imagine conventional policing without racialized tactics and strategy?</p>
+            <p>Locally, these disparities are glaring. Traffic stops are
+                <a href="https://www.startribune.com/black-drivers-make-up-majority-of-minneapolis-police-searches-during-routine-traffic-stops/572029792/" target="_blank">massively skewed</a>.
+                <a href="https://www.nytimes.com/2020/05/27/us/minneapolis-police.html" target="_blank">60% of MPD shooting victims</a> are Black.
+                <a href="https://www.startribune.com/minneapolis-cops-halt-marijuana-stings-after-almost-all-arrested-were-black/484876151/" target="_blank">Almost all</a> targets of low-level marijuana stings were Black.
+            </p>
+            <p>Nationally, similar examples abound.
+                In Los Angeles, <a href="https://www.theguardian.com/us-news/2020/sep/30/los-angeles-police-citations-black-residents" target="_blank">Black residents are four times as likely to be cited by police</a>.
+                Across the country, Black people have been <a href="https://mappingpoliceviolence.org/" target="_blank">28% of those killed by police in 2020</a> despite constituting 13% of the population.
+                New York City's "stop and frisk" policing not only massively targeted innocent people, <a href="https://www.nyclu.org/en/stop-and-frisk-data" target="_blank">overwhelmingly those people were Black and Latino</a>.
+            </p>
         </div>
     </div>
 
@@ -127,130 +149,151 @@
       links
     };
   }
+
+  // A very hacky deconstruction of a d3 sankey methodology! should be written from ground up, possibly just as an area-line chart
+  // but was a good learning process
   const drawBudgetChart = () => {
-    // d3.csv("data/budget_sankey2.csv").then((data) => {
-  const color = d3.scaleOrdinal(
-    ["Black & African American", "White", "Other"],
-    ["#1E99A8", "#7BC1BF", "#9EA2A1"]
-  ).unknown("#ccc");
+        // d3.csv("data/budget_sankey2.csv").then((data) => {
+      const color = d3.scaleOrdinal(
+        ["Black & African American", "White", "Other"],
+        ["#1E99A8", "#7BC1BF", "#9EA2A1"]
+      ).unknown("#ccc");
 
-  const height = 720;
-  const width = 975;
+      const height = 720;
+      const width = 975;
 
-  const getSliceOfYPie = (linkHeight) => (height * (linkHeight / 100));
-  const getYPoints = (link, startYSoFar, endYSoFar) => ({
-    startY0: startYSoFar,
-    startY1: startYSoFar + getSliceOfYPie(link.start),
-    endY0: endYSoFar,
-    endY1: endYSoFar + getSliceOfYPie(link.end)
-  })
-
-  const ySoFarCounters = {
-    2: {start: 0, end: 0},
-    3: {start: 0, end: 0},
-    4: {start: 0, end: 0},
-  };
-  const nodesAndLinks = {
-    nodes: [
-      { name: 'Black & African American' },
-      { name: 'White' },
-      { name: 'Other' },
-      { name: 'Stopped' },
-      { name: 'Searched' },
-      { name: 'Cited or Booked' }
-    ],
-    links: [
-      { names: ['Black & African American', 'Stopped'], source: 0, target: 3, value: 19, start: 19, end: 54},
-      { names: ['White', 'Stopped'], source: 1, target: 3, value: 64, start: 64, end: 30 },
-      { names: ['Other', 'Stopped'], source: 2, target: 3, value: 17, start: 17, end: 16 },
-      { names: ['Black & African American', 'Stopped', 'Searched'], source: 3, target: 4, value: 78, start: 54, end: 78 },
-      { names: ['White', 'Stopped', 'Searched'], source: 3, target: 4, value: 12, start: 30, end: 12 },
-      { names: ['Other', 'Stopped', 'Searched'], source: 3, target: 4, value: 10, start: 16, end: 10 },
-      { names: ['Black & African American', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 72, start: 78, end: 72 },
-      { names: ['White', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 15, start: 12, end: 15 },
-      { names: ['Other', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 13, start: 10, end: 13 },
-    ].map(link => {
-      const counterIndex = link.names.length;
-      const { start, end } = ySoFarCounters[counterIndex];
-      const newLink = Object.assign(link, getYPoints(link, start, end));
-      ySoFarCounters[counterIndex].start += getSliceOfYPie(link.start);
-      ySoFarCounters[counterIndex].end += getSliceOfYPie(link.end);
-      return newLink;
-    })
-  }
-
-  const sankey = d3.sankey()
-      .nodeSort(null)
-      .linkSort(null)
-      .nodeWidth(4)
-      .nodePadding(20)
-      .extent([[0, 5], [width, height - 5]]);
-  const {nodes, links} = sankey({
-    nodes: nodesAndLinks.nodes.map(d => Object.assign({}, d)),
-    links: nodesAndLinks.links.map(d => Object.assign({}, d))
-  });
-
-  const chart = d3.select("#chart");
-  const svg = chart.append("svg")
-      .attr("viewBox", [0, 0, width, height]);
-
-  // svg.append("g")
-  //     .selectAll("rect")
-  //     .data(nodes)
-  //     .join("rect")
-  //     .attr("x", d => d.x0)
-  //     .attr("y", d => d.y0)
-  //     .attr("height", d => d.y1 - d.y0)
-  //     .attr("width", d => d.x1 - d.x0)
-  //     .append("title")
-  //         .text(d => `${d.name}\n${d.value.toLocaleString()}%`);
-
-  const curve = d3.line(); //.curve(d3.curveNatural);
-  svg.append("g")
-      .attr("fill", "none")
-      .selectAll("g")
-      .data(links)
-      .join("path")
-      // .attr("d", d3.sankeyLinkHorizontal())
-      // .attr("d", d3.linkHorizontal()
-      //     .source(function(d) { return [d.source.x1, d.y0] })
-      //     .target(function(d) { return [d.target.x0, d.y1] })
-      // )
-      .attr("d", d => {
-        const points = [
-          [d.source.x1, d.startY0],
-          [d.source.x1, d.startY1],
-          [d.target.x0, d.endY1],
-          [d.target.x0, d.endY0],
-          [d.source.x1, d.startY0],
-        ];
-        return curve(points);
+      const getSliceOfYPie = (linkHeight) => (height * (linkHeight / 100));
+      const getYPoints = (link, startYSoFar, endYSoFar) => ({
+        startY0: startYSoFar,
+        startY1: startYSoFar + getSliceOfYPie(link.start),
+        endY0: endYSoFar,
+        endY1: endYSoFar + getSliceOfYPie(link.end)
       })
-      .attr("stroke", d => color(d.names[0]))
-      .attr("fill", d => color(d.names[0]))
-      // .attr("stroke-width", d => d.width)
-      .attr("stroke-width", 2)
-      .style("mix-blend-mode", "multiply")
-      .append("title")
-          .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}%`);
 
-  svg.append("g")
-      // .style("font", "10px sans-serif")
-      .selectAll("text")
-      .data(nodes)
-      .join("text")
-          .attr("class", "sankey-label")
-          .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-          .attr("y", d => (d.y1 + d.y0) / 2)
-          .attr("dy", "0.35em")
-          .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
-          .text(d => d.name)
-          .append("tspan")
-              .attr("class", "sankey-label-amount")
-              .attr("fill-opacity", 0.7)
-              .text(d => ` ${d.value.toLocaleString()}%`);
-    // })
+      const ySoFarCounters = {
+        2: {start: 0, end: 0},
+        3: {start: 0, end: 0},
+        4: {start: 0, end: 0},
+      };
+      const nodesAndLinks = {
+        nodes: [
+          { name: 'Black & African American' },
+          { name: 'White' },
+          { name: 'Other' },
+          { name: 'Stopped' },
+          { name: 'Searched' },
+          { name: 'Cited or Booked' }
+        ],
+        links: [
+          { names: ['Black & African American', 'Stopped'], source: 0, target: 3, value: 19, start: 19, end: 54},
+          { names: ['White', 'Stopped'], source: 1, target: 3, value: 64, start: 64, end: 30 },
+          { names: ['Other', 'Stopped'], source: 2, target: 3, value: 17, start: 17, end: 16 },
+          { names: ['Black & African American', 'Stopped', 'Searched'], source: 3, target: 4, value: 78, start: 54, end: 78 },
+          { names: ['White', 'Stopped', 'Searched'], source: 3, target: 4, value: 12, start: 30, end: 12 },
+          { names: ['Other', 'Stopped', 'Searched'], source: 3, target: 4, value: 10, start: 16, end: 10 },
+          { names: ['Black & African American', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 72, start: 78, end: 72 },
+          { names: ['White', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 15, start: 12, end: 15 },
+          { names: ['Other', 'Stopped', 'Searched', 'Cited or Booked'], source: 4, target: 5, value: 13, start: 10, end: 13 },
+        ].map(link => {
+          const counterIndex = link.names.length;
+          const { start, end } = ySoFarCounters[counterIndex];
+          const newLink = Object.assign(link, getYPoints(link, start, end));
+          ySoFarCounters[counterIndex].start += getSliceOfYPie(link.start);
+          ySoFarCounters[counterIndex].end += getSliceOfYPie(link.end);
+          return newLink;
+        })
+      }
+
+      const sankey = d3.sankey()
+          .nodeSort(null)
+          .linkSort(null)
+          .nodeWidth(4)
+          .nodePadding(20)
+          .extent([[0, 5], [width, height - 5]]);
+      const {nodes, links} = sankey({
+        nodes: nodesAndLinks.nodes.map(d => Object.assign({}, d)),
+        links: nodesAndLinks.links.map(d => Object.assign({}, d))
+      });
+
+      const chart = d3.select("#chart");
+      const svg = chart.append("svg")
+          .attr("viewBox", [0, 0, width, height]);
+
+      // svg.append("g")
+      //     .selectAll("rect")
+      //     .data(nodes)
+      //     .join("rect")
+      //     .attr("x", d => d.x0)
+      //     .attr("y", d => d.y0)
+      //     .attr("height", d => d.y1 - d.y0)
+      //     .attr("width", d => d.x1 - d.x0)
+      //     .append("title")
+      //         .text(d => `${d.name}\n${d.value.toLocaleString()}%`);
+
+      const curve = d3.line(); //.curve(d3.curveNatural);
+      svg.append("g")
+          .attr("fill", "none")
+          .selectAll("g")
+          .data(links)
+          .join("path")
+          // .attr("d", d3.sankeyLinkHorizontal())
+          // .attr("d", d3.linkHorizontal()
+          //     .source(function(d) { return [d.source.x1, d.y0] })
+          //     .target(function(d) { return [d.target.x0, d.y1] })
+          // )
+          .attr("d", d => {
+            const points = [
+              [d.source.x1, d.startY0],
+              [d.source.x1, d.startY1],
+              [d.target.x0, d.endY1],
+              [d.target.x0, d.endY0],
+              [d.source.x1, d.startY0],
+            ];
+            return curve(points);
+          })
+          .attr("stroke", d => color(d.names[0]))
+          .attr("fill", d => color(d.names[0]))
+          // .attr("stroke-width", d => d.width)
+          .attr("stroke-width", 2)
+          .style("mix-blend-mode", "multiply")
+          .append("title")
+              .text(d => `${d.names.join(" → ")}\n${d.value.toLocaleString()}%`);
+
+      const syntheticLastColumnNodes = links.slice(links.length - 3).map(l => ({ ...l, start: l.end, startY0: l.endY0, startY1: l.endY1, value: l.end, source: l.target }))
+      const linksWithLastThreeDuplicated = links.concat(syntheticLastColumnNodes);
+      svg.append("g")
+          // .style("font", "10px sans-serif")
+          .selectAll("text")
+          // .data(nodes.slice(0, 3)) // just the racial labels on the left column
+          .data(linksWithLastThreeDuplicated)
+          .join("text")
+              .attr("class", "sankey-label")
+              // .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+              .attr("x", d => d.source.x1 < width * .75 ? d.source.x1 + 6 : d.source.x0 - 30)
+              // .attr("y", d => (d.y1 + d.y0) / 2)
+              .attr("y", d => (d.startY1 + d.startY0) / 2)
+              .attr("dy", "0.35em")
+              // .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
+              .attr("text-anchor", d => d.start < width / 2 ? "start" : "end")
+              .text(d => d.names.length === 2 ? d.source.name : '')
+              .append("tspan")
+                  .attr("class", "sankey-label-amount")
+                  .attr("fill-opacity", 0.7)
+                  .text(d => ` ${d.start.toLocaleString()}%`);
+        // })
+      const headers = ['Percentage of population', '% Stopped by Police', '% Searched', '% Cited or Booked'];
+      svg.append("g")
+        .selectAll("text")
+        .data(headers)
+        .join("text")
+        .text(d => d)
+        .attr("x", d => ((headers.indexOf(d)) * .33 * width) + 10)
+        .attr("text-anchor", d => headers.length === (headers.indexOf(d) + 1) ? "end" : "start")
+        .attr("y", 20)
+        .attr("class", "column-label");
+
   }
+
 
   // load chart when DOM is ready
   if (document.readyState!=='loading') drawBudgetChart();
