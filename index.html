@@ -3,8 +3,8 @@
 <head>
 
   <meta charset="utf-8">
-  <title>Minneapolis Police Data</title>
-  <meta name="description" content="MPData">
+  <title>Minneapolis Safety Data</title>
+  <meta name="description" content="Data on Minneapolis safety and police issues, including police budgets, number of officers, disparities of policing impact">
   <meta name="author" content="Jesse Mortenson">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,12 +24,13 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns masthead">
-        <h1>Minneapolis Police Data /<a href="#" class="nav-activator">menu</a></h1>
+        <h1>Minneapolis Safety Data /<a href="#" class="nav-activator">menu</a></h1>
         <nav>
           <ul role="navigation">
             <li><h3><a href="officers.html">Officers</a></h3></li>
             <li><h3><a href="budget.html">Budget</a></h3></li>
             <li><h3><a href="disparities.html">Disparities</a></h3></li>
+            <li><h3><a href="links.html">More Info</a></h3></li>
           </ul>
         </nav>
       </div>
@@ -42,7 +43,7 @@
             <p>-----------------------------------<br />
             <strong>Minneapolis Police Dept</strong><br />
             -----------------------------------</p>
-            <p>Officers ............................ <a href="officers.html">856</a></p>
+            <p>Officers ............................ <a href="officers.html"><span id="officer-number">856</span></a></p>
             <p>Vehicle Stops ....... <a href="disparities.html">54% Black/E African</a></p>
             <p>Vehicle Searches .... <a href="disparities.html">78% Black/E African</a></p>
             <p>Police Shooting Victims ....... <a href="disparities.html">60% Black</a></p>
@@ -55,6 +56,18 @@
             <p>------------------------<br />
             Thank you for taxpaying!<br />
             ------------------------</p>
+          </div>
+
+          <div class="teasers">
+            <a href="officers.html">
+              <img src="images/teaser_officer_counts.png" />
+            </a>
+            <a href="budget.html">
+              <img src="images/teaser_budgets.png" />
+            </a>
+            <a href="disparities.html">
+              <img src="images/teaser_disparities.png" />
+            </a>
           </div>
         </div>
       </div>
@@ -76,7 +89,7 @@
           George Floyd matters. Data should not push those stories out of the center.
         </p>
         <p>
-          But <a href="https://www.mpd150.com" target="_blank">others</a> tell that story better. And if we're going to
+          But <a href="https://www.mpd150.com" target="_blank">others</a> tell that story better than I can. And if we're going to
           move money, we better know where it is. We better be able to make our own arguments about how it can be used,
           in combination with what policies, to produce better outcomes. To produce safety that we can see and measure,
           for everyone.
@@ -90,8 +103,16 @@
         </blockquote>
 
         <div class="progress">
-          <h4>Trying to Get the Bill</h4>
+          <h4>Updates</h4>
           <p><em>My progress getting to the bottom of how we attempt to produce "safety"</em></p>
+
+          <div class="entry">
+            <h5>10/11/20</h5>
+            <p>
+              Added a change-over-time graph to the Budget page, and updated with data from the 2021 proposed budget.
+              Next up: data on funding for "police alternatives" within Minneapolis as well as other cities.
+            </p>
+          </div>
 
           <div class="entry">
             <h5>10/1/20</h5>
@@ -141,8 +162,37 @@
       </div>
 
     </div>
+
+    <div class="row">
+      <footer>
+          Public use of data and references found here is encouraged.
+          Questions or collaboration?
+          <a href="mailto:jessemortenson+safetydata@gmail.com">Contact Jesse Mortenson</a>
+      </footer>
+    </div>
   </div>
 
   <script src="js/mpdata.js"></script>
+  <script type="text/javascript">
+    const frontPageEvents = () => {
+      const animateOfficerNumber = () => {
+        const numbers = [650, 850, 856, 750, 743, 750];
+        const officerNumberElem = document.querySelector('#officer-number');
+        const currentNumber = Number.parseInt(officerNumberElem.textContent, 10);
+        const getRandomNumber = () => numbers[Math.floor(Math.random() * numbers.length)];
+        let randomNumber = getRandomNumber();
+        while (randomNumber === currentNumber) {
+          randomNumber = getRandomNumber();
+        }
+        officerNumberElem.textContent = `${randomNumber}`;
+      }
+      setInterval(animateOfficerNumber, 1000);
+    }
+    if (document.readyState!=='loading') frontPageEvents();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', frontPageEvents);
+    else document.attachEvent('onreadystatechange', function(){
+        if (document.readyState==='complete') frontPageEvents();
+    });
+  </script>
 </body>
 </html>

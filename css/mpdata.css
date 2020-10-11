@@ -32,6 +32,12 @@ nav ul {
         margin-top: 5%
     }
 }
+footer {
+    padding: 3rem;
+    margin: 3rem 0 0 0;
+    background-color: #ccc;
+    text-align: center;
+}
 
 /* Frontpage */
 .receipt-content {
@@ -55,6 +61,22 @@ nav ul {
     .receipt-content {
         font-size: 2rem;
     }
+}
+.teasers {
+    margin: 2rem 0;
+}
+.teasers img {
+    display: block;
+    width: 100%;
+}
+.teasers a {
+    display: block;
+    margin: 1rem 0;
+    border: 1px solid #1EAEDB;;
+}
+.teasers a:hover {
+    border: 1px solid #CCC;
+    opacity: .5;
 }
 .progress {
     margin-top: 20%;
