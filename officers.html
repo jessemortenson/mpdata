@@ -45,6 +45,12 @@
     </div>
 
     <div class="row">
+      <div class="twelve columns chart-title">
+        <h6><em>Click a data point to read source article. (or <a href="#" onclick="drawOfficerChart(false)">click here to zoom out</a>)</em></h6>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="four columns">
         <h5>Highlights</h5>
         <ul>
@@ -69,6 +75,11 @@
         of officers who patrol or respond to 911 calls. The sworn officers number is typically lower than the
         <em>budgeted</em> number. Especially amidst reports of officers taking leave, claiming disability, quitting
         the department: it's hard to get a clear picture of how many officers Minneapolis pays and what they do.</p>
+        <p>The data points keep piling up, without a clear and consistent picture of how many officers are actually
+        working day to day in the department. Who to believe: city sources, or lawyers for groups of officers threatening
+        that 100 or 200 officers are quitting/claiming disability? This dynamic is clearly an important
+        factor in the Mayor's 2021 budget proposal, wherein MPD budget cuts primarily take the shape of deciding
+        not to fill positions that have been vacated by the officers themselves.</p>
       </div>
     </div>
 
@@ -127,10 +138,10 @@
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://d3js.org/d3-time.v2.min.js"></script>
   <script type="text/javascript">
-    let zoomed = false;
-    const drawOfficerChart = () => {
+    const drawOfficerChart = (zoomed) => {
       const allData = [
         { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
+        { x: '2020-10-12', y: 675, tag: 'disability/quit?', label: 'Reported', url: 'https://kstp.com/news/minneapolis-loses-more-police-officers-to-disability-claims-october-12-2020/5892953/' },
         { x: '2020-10-08', y: 750, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/10/08/minneapolis-chief-will-try-to-make-do-with-fewer-officers-in-2021' },
         { x: '2020-08-21', y: 743, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
         { x: '2020-08-14', y: 750, tag: 'disability/quit?', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/14/minneapolis-mayor-calls-for-unity-outlines-broad-plan-for-city-budget' },
@@ -151,9 +162,9 @@
       const dateParsedData = data.map(d => ({...d, x: parseDate(d.x)}));
 
       const margin = {
-        top: 0,
+        top: 10,
         right: 40,
-        bottom: 40,
+        bottom: 10,
         left: 40
       };
 
@@ -167,14 +178,14 @@
       const yMax = zoomed ? 1000 : 1350;
       const y = d3.scaleLinear()
         .domain([yMax, 600])
-        .rangeRound([margin.top, height - margin.bottom])
+        .rangeRound([margin.top, height - margin.top])
       const xAxis = d3.axisBottom()
         .scale(x);
       const yAxis = d3.axisLeft(y)
 
       const chart = d3.select("#chart");
 
-      if (zoomed) {
+      if (document.querySelector('#chart svg')) {
         // remove the old chart
         chart.selectAll("svg")
           .remove();
@@ -188,12 +199,12 @@
       svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis.ticks(null).tickSize(0))
+        .call(xAxis.ticks(null).tickSize(0).tickFormat(d3.timeFormat("%m/%y")))
 
       svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
-        .attr('transform', `translate(${margin.left},0)`)
+        .attr('transform', `translate(${margin.left},${margin.top})`)
 
 
       const gdots = svg.selectAll("g.dot")
@@ -234,7 +245,7 @@
       const notSameDatum = (d, otherD) => otherD.x !== d.x || otherD.y !== d.y;
       const reduceTextOverlapFactory = (d) => (foundY, otherD) => {
         if (textLikelyOverlaps(d, otherD) && notSameDatum(d, otherD)) {
-          return (otherD.y > d.y) ? y(d.y) + 6 : y(d.y) - 6;
+          return (otherD.y > d.y) ? y(d.y) + 12 : y(d.y) - 12;
         }
         return foundY;
       }
@@ -274,18 +285,20 @@
           .attr("y", zoomTangle.y);
 
         zoomTangleG.on("click", () => {
-          zoomed = true;
-          drawOfficerChart();
+          drawOfficerChart(true);
         });
       }
     }
 
+    const drawDefaultOfficerChart = () => {
+      drawOfficerChart(true);
+    }
 
     // load chart when DOM is ready
-    if (document.readyState!=='loading') drawOfficerChart();
-    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawOfficerChart);
+    if (document.readyState!=='loading') drawDefaultOfficerChart();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawDefaultOfficerChart);
     else document.attachEvent('onreadystatechange', function(){
-      if (document.readyState==='complete') drawOfficerChart();
+      if (document.readyState==='complete') drawDefaultOfficerChart();
     });
   </script>
 </body>
