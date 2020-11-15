@@ -127,3 +127,33 @@ footer {
     font-weight: bold;
     font-size: 120%;
 }
+
+/* Service Cards */
+@media only screen and (min-width: 550px) {
+    .cards-container {
+        display: flex;
+    }
+}
+.service-card {
+    border: 1px solid #666;
+    padding: 1rem;
+    margin: 0 1rem 1rem 0;
+    flex: 50%;
+}
+.service-card h6 {
+    margin: 0;
+}
+.service-card .pie-charts {
+    display: flex;
+}
+.service-card .pie-charts .pie-container {
+    flex: 50%;
+    text-align: center;
+    margin-right: 1rem;
+}
+.service-card .pie-charts .pie-container .label {
+    font-size: 80%;
+}
+.service-card .pie-charts .pie-container svg {
+    margin: auto;
+}
