@@ -132,13 +132,14 @@ footer {
 @media only screen and (min-width: 550px) {
     .cards-container {
         display: flex;
+        flex-wrap: wrap;
     }
 }
 .service-card {
     border: 1px solid #666;
     padding: 1rem;
     margin: 0 1rem 1rem 0;
-    flex: 50%;
+    flex: 0 0 30%;
 }
 .service-card h6 {
     margin: 0;

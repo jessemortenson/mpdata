@@ -81,6 +81,13 @@
                     and
                     <a href="https://www.kron4.com/news/bay-area/oakland-considers-policing-model-involving-civilians-responding-to-specific-911-calls/" target="_blank">Oakland</a>.
                 </li>
+                <li>
+                    In Nov 2020, two proposals emerged in Minneapolis for a new, 24/7 citywide mental health 911 response service.
+                    <a href="https://docs.google.com/document/d/16-3SKF5E040Zax0nemxedPWRRsv3FJgStKO4s0lCeWw/edit" target="_blank">The People's Budget</a>
+                    ($4.5M) and
+                    <a href="https://beta.documentcloud.org/documents/20417659-2020-11-27-minneapolis-safety-for-all-budget-proposal" target="_blank">Safety For All</a>
+                    ($2.4M).
+                </li>
             </ul>
         </div>
 
@@ -119,6 +126,33 @@
                 both options of creating a new mental health response through the Fire Department, and/or expanding
                 the "co-responder" program in which a mental health professional responds alongside Police.
             </p>
+            <p>
+                In November of 2020, Minneapolis saw two new proposals emerge for a new, 24/7 citywide mental health 911 response
+                service. Neither is technical about which call codes would be involved, however one states that
+                "mental health crisis calls ... are the third most common top-priority category; 80% of them are
+                non-life-threatening, and only 9% of them result in a police report." Both proposals envision unarmed
+                mental health professionals and paramedics responding, without police.
+            </p>
+            <p>
+                The main difference is the size of funding: the <strong>People's Budget</strong> proposal is a <strong>$4.5M</strong>
+                budget, which is similar to some other cities (above) where the program is about 2% of the city's police
+                budget. In contrast, <strong>Safety for All</strong> proposes a <strong>$2.44M</strong> budget, only about
+                1% of the MPD budget.
+            </p>
+            <ul>
+                <li>
+                    <a href="https://docs.google.com/document/d/16-3SKF5E040Zax0nemxedPWRRsv3FJgStKO4s0lCeWw/edit" target="_blank">The People's Budget</a>:
+                    community groups including Black Visions and Reclaim the Block
+                </li>
+                <li>
+                    <a href="https://beta.documentcloud.org/documents/20417659-2020-11-27-minneapolis-safety-for-all-budget-proposal" target="_blank">Safety For All</a>:
+                    Councilmembers Phillipe Cunningham, Steve Fletcher, Lisa Bender
+                </li>
+            </ul>
+            <p>
+                <em>For more exploration of these proposals, <a href="https://plans.minneapolissafetydata.com">view the safety plans visualization</a></em>
+            </p>
+
             <h5>When you want to <em>prevent</em> violent crime</h5>
             <p>The city of Minneapolis'
                 <a href="http://www2.minneapolismn.gov/minneapolisforward/violenceprevention" target="_blank">Office of Violence Prevention</a>
@@ -137,6 +171,18 @@
                     $2.5 million in new, ongoing funding for the MinneapolUS Street Outreach Initiative, aka "Violence Interrupters"
                     (loosely modeled along the lines of <a href="https://www.pbs.org/wgbh/frontline/film/interrupters/" target="_blank">a program in Chicago</a>)
                 </li>
+            </ul>
+            <p>Others have suggested additional violence prevention programs, including:</p>
+            <ul>
+                <li>$2.0 million: Expand Community Navigators, expand Next Step, expand the Institute to Prevent Violence;
+                    develop Group Violence Intervention in South Minneapolis; increase Office of Violence Prevention operating
+                budget to open northside/southside offices (Safety For All)</li>
+                <li>$1.9 million: Transfer Crime Prevention from MPD to Neighborhood and Community Relations; fund restorative
+                justice & de-escalation training; increase the Violence Prevention Fund (Safety for All)</li>
+                <li>$6.5 million: Fund coordinated street outreach teams geared toward violence prevention and supportive services (People's Budget)</li>
+                <li>$950,000: Neighborhood restorative justice programs (People's Budget)</li>
+                <li>$200,000: Fund the replacement of a federal community safety coordination grant for community safety
+                    activities for and by Little Earth residents and to restart restorative justice programming (People's Budget)</li>
             </ul>
             <h5>When you want to reduce harm generally?</h5>
             <p>
@@ -183,8 +229,12 @@
                     (numbered within the PDF as pages 366 - 372)
                 </li>
                 <li>
-                    Minneapolis 911 workgroup's <a href="https://tableau.minneapolismn.gov/views/911MPDWorkgroupDataOverview/1-TypesofCallsforService?iframeSizedToWindow=true&%3Aembed=y&%3AshowAppBanner=false&%3Adisplay_count=no&%3AshowVizHome=no&%3Aorigin=viz_share_link" target="_blank">911 data visualizations</a>
+                    Minneapolis 911 workgroup's <a href="https://tableau.minneapolismn.gov/views/911MPDWorkgroupDataOverview/1-TypesofCallsforService?iframeSizedToWindow=true&%3Aembed=y&%3AshowAppBanner=false&%3Adisplay_count=no&%3AshowVizHome=no&%3Aorigin=viz_share_link" target="_blank">911 data visualizations</a>.
+                    Call numbers from this data were used to estimate potential calls that could be served by a new mental health
+                    response service.
                 </li>
+                <li><a href="https://docs.google.com/document/d/16-3SKF5E040Zax0nemxedPWRRsv3FJgStKO4s0lCeWw/edit" target="_blank">The People's Budget Proposal</a></li>
+                <li><a href="https://beta.documentcloud.org/documents/20417659-2020-11-27-minneapolis-safety-for-all-budget-proposal" target="_blank">Safety For All Budget Proposal</a></li>
             </ul>
         </div>
     </div>
@@ -236,6 +286,28 @@
       callsServedMax: 50663, // 2019 all mental health calls - weapon/potential for violence
       policeCalls: 262131, // 2018
       population: 883305,
+    },
+    {
+      name: "People's Budget",
+      startDate: new Date('2021-03-01T00:00:00'),
+      location: 'Minneapolis, MN',
+      budget: 4.5,
+      policeBudget: 178.7,
+      callsServedMin: Math.round(29989 / 2), // Emotionally Disturbed Person, Unwanted Person,
+      callsServedMax: Math.round(34433 / 2), // Emotionally Disturbed Person, Unwanted Person, suicide, slumper, accidental overdose
+      policeCalls: Math.round(517575 / 2), // 2 years of data, June 2017 to June 2019 - 911 working group, minus directed patrol, foot beat, on site, unknown wireless cell phone, etc.
+      population: 429606,
+    },
+    {
+      name: "Safety For All",
+      startDate: new Date('2021-03-01T00:00:00'),
+      location: 'Minneapolis, MN',
+      budget: 2.44,
+      policeBudget: 178.7,
+      callsServedMin: Math.round(29989 / 2), // Emotionally Disturbed Person, Unwanted Person,
+      callsServedMax: Math.round(34433 / 2), // Emotionally Disturbed Person, Unwanted Person, suicide, slumper, accidental overdose
+      policeCalls: Math.round(517575 / 2), // 2 years of data, June 2017 to June 2019 - 911 working group, minus directed patrol, foot beat, on site, unknown wireless cell phone, etc.
+      population: 429606,
     }
   ];
 
