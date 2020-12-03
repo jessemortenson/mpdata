@@ -91,6 +91,17 @@
         <p>A source tells me that there were 800 sworn officers at the end of July, which casts some doubt on some
         of the disability-claim-related lower numbers reported in August (650, for example). Still, MPR had the number
         at 750 in early October.</p>
+        <h4>2021 Projection</h4>
+        <p>Chief Rondo's presentation (based on the Mayor's proposed 2021 budget) projects how many sworn officers are
+        expected to serve throughout 2021 if the budget passes. On
+          <a href="https://lims.minneapolismn.gov/Download/File/4387/2021%20Budget%20Presentation%20-%20Police%20Department.pdf" target="_blank">page 18</a>
+        (pdf) it includes this graph:</p>
+        <img src="images/rondo-budget-proposal-sworn-fte.png" style="width: 100%" alt="Chief Rondo sworn officers projection through 2021" />
+        <p>This projection amounts to a significant reduction of officers, apparently all of it due to attrition: officers
+        taking leave or otherwise walking away from the job. Rondo was
+          <a href="https://www.mprnews.org/story/2020/10/08/minneapolis-chief-will-try-to-make-do-with-fewer-officers-in-2021" target="_blank">quoted</a>
+          saying "Maintaining target staffing
+          levels will be challenging due to significant and unpredictable attrition."</p>
       </div>
     </div>
 
@@ -153,12 +164,15 @@
     const drawOfficerChart = (zoomed) => {
       const allData = [
         { x: '2025-01-01', y: 1300, tag: 'Chief Rondo', label: 'Chief Rondo\'s budget request', url: 'https://www.startribune.com/in-minneapolis-911-nonresponses-underscore-needs-for-more-cops-advocates-say/513295582/'},
+        { x: '2021-12-01', y: 760, tag: 'Rondo budget', label: 'Rondo projection', url: 'https://lims.minneapolismn.gov/Download/File/4387/2021%20Budget%20Presentation%20-%20Police%20Department.pdf' },
+        { x: '2021-07-01', y: 745, tag: 'Rondo budget', label: 'Rondo projection', url: 'https://lims.minneapolismn.gov/Download/File/4387/2021%20Budget%20Presentation%20-%20Police%20Department.pdf' },
+        { x: '2021-01-01', y: 725, tag: 'Rondo budget', label: 'Rondo projection', url: 'https://lims.minneapolismn.gov/Download/File/4387/2021%20Budget%20Presentation%20-%20Police%20Department.pdf' },
         { x: '2020-10-12', y: 675, tag: 'disability/quit?', label: 'Reported', url: 'https://kstp.com/news/minneapolis-loses-more-police-officers-to-disability-claims-october-12-2020/5892953/' },
         { x: '2020-10-08', y: 750, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/10/08/minneapolis-chief-will-try-to-make-do-with-fewer-officers-in-2021' },
-        { x: '2020-08-21', y: 743, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
-        { x: '2020-08-14', y: 750, tag: 'disability/quit?', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/14/minneapolis-mayor-calls-for-unity-outlines-broad-plan-for-city-budget' },
-        { x: '2020-08-21', y: 856, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
-        { x: '2020-07-17', y: 850, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
+        { x: '2020-08-21', y: 743, yskew: 12, tag: 'charter min.', label: 'Charter-mandated minimum', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+        { x: '2020-08-14', y: 750, yskew: -12, tag: 'disability/quit?', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/14/minneapolis-mayor-calls-for-unity-outlines-broad-plan-for-city-budget' },
+        { x: '2020-08-21', y: 856, yskew: -12, tag: 'reported', label: 'Reported', url: 'https://www.mprnews.org/story/2020/08/20/plaintiffs-sue-to-keep-minneapolis-cops-on-the-job' },
+        { x: '2020-07-17', y: 850, yskew: 12, tag: 'reported', label: 'Reported', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/'},
         { x: '2020-07-17', y: 650, tag: 'disability/quit?', label: '-Disability claims', url: 'https://www.startribune.com/staggering-number-of-mpls-cops-are-filing-disability-claims/571809512/' },
         { x: '2020-07-30', y: 800, tag: 'reported', label: 'Reported', url: '#'},
         { x: '2020-01-01', y: 902, tag: 'budgeted', label: 'Adopted budget #', url: 'https://www.minnpost.com/metro/2019/12/with-budget-moves-minneapolis-council-looks-to-take-middle-path-on-public-safety/'},
@@ -167,7 +181,7 @@
         { x: '2008-07-01', y: 916, tag: 'reported', label: 'Reported all-time peak', url: 'https://www.startribune.com/minneapolis-police-chief-reiterates-desire-to-grow-department-to-1-000-cops-despite-growing-resistance/507060382/'}
       ];
 
-      const data = zoomed ? allData.filter(dp => dp.x > '2019-04-01' && dp.x < '2021-01-01') : allData;
+      const data = zoomed ? allData.filter(dp => dp.x > '2019-04-01' && dp.x < '2021-08-01') : allData;
 
       const width = 700;
       const height = 500;
@@ -254,24 +268,27 @@
           }
         });
 
-      const textLikelyOverlaps = (d, otherD) => Math.abs(x(otherD.x) - x(d.x)) < 70 && Math.abs(y(otherD.y) - y(d.y)) < 20;
-      const notSameDatum = (d, otherD) => otherD.x !== d.x || otherD.y !== d.y;
-      const reduceTextOverlapFactory = (d) => (foundY, otherD) => {
-        if (textLikelyOverlaps(d, otherD) && notSameDatum(d, otherD)) {
-          return (otherD.y > d.y) ? y(d.y) + 12 : y(d.y) - 12;
-        }
-        return foundY;
-      }
+      // Code to automatically generate vertical skew ... just didn't work as well as manually setting it lol
+      // const textLikelyOverlaps = (d, otherD) => Math.abs(x(otherD.x) - x(d.x)) < 70 && Math.abs(y(otherD.y) - y(d.y)) < 20;
+      // const notSameDatum = (d, otherD) => otherD.x !== d.x || otherD.y !== d.y;
+      // const reduceTextOverlapFactory = (d) => (foundY, otherD) => {
+      //   if (textLikelyOverlaps(d, otherD) && notSameDatum(d, otherD)) {
+      //     return (otherD.y > d.y) ? y(d.y) + 12 : y(d.y) - 12;
+      //   }
+      //   return foundY;
+      // }
       gdots.append("text")
         .text(function (d) {
           return `${d.y} (${d.tag})`;
         })
         .attr("class", "datapoint-label")
+        .attr("font-size", "10px")
         .attr("x", function (d) {
           return x(d.x) + 10;
         })
         .attr("y", function (d) {
-          const adjustedY = dateParsedData.reduce(reduceTextOverlapFactory(d), y(d.y));
+          const skewed = d.yskew ? y(d.y) + d.yskew : y(d.y);
+          const adjustedY = skewed; // dateParsedData.reduce(reduceTextOverlapFactory(d), y(d.y));
           return adjustedY + 4;
         });
 
