@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>Crime Solving - Minneapolis Safety Data</title>
+    <meta name="description" content="Data on Minneapolis safety and police issues, including police budgets, number of officers, disparities of policing impact">
+    <meta name="author" content="Jesse Mortenson">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/mpdata.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <script async defer data-domain="minneapolissafetydata.com" src="https://plausible.io/js/plausible.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="twelve columns masthead">
+            <h1>Solving Crime /<a href="#" class="nav-activator">menu</a></h1>
+            <nav>
+                <ul role="navigation">
+                    <li><h3><a href="index.html">Home</a></h3></li>
+                    <li><h3><a href="new.html">New Safety Services</a></h3></li>
+                    <li><h3><a href="officers.html">Officers</a></h3></li>
+                    <li><h3><a href="budget.html">Budget</a></h3></li>
+                    <li><h3><a href="disparities.html">Disparities</a></h3></li>
+                    <li><h3><a href="links.html">More Info</a></h3></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <div id="chart">
+                <img src="images/chart_murder_clearance.png" style="max-width: 100%" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns chart-title">
+            <h6><em>Minneapolis murders solved (54%, gray) vs. unsolved (red), 2014-2019 from <a href="http://www.murderdata.org/p/blog-page.html?m=1" target="_blank">
+                Murder Accountability Project
+            </a></em></h6>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="four columns">
+            <h5>Highlights</h5>
+            <ul>
+                <li><a href="http://www.murderdata.org/p/blog-page.html?m=1" target="_blank">54% of murders</a> solved 2014-2019</li>
+                <li><a href="https://www.npr.org/2015/03/30/395799413/how-many-crimes-do-your-police-clear-now-you-can-find-out" target="_blank">36% of violent crime</a> solved 2011-213</li>
+                <li>
+                    <a href="https://www.startribune.com/minneapolis-police-discover-1-700-untested-rape-kits-spanning-30-years/564989082/">1700 untested rape kits</a> found in 2019
+                </li>
+            </ul>
+        </div>
+
+        <div class="eight columns">
+            <h4>Do Minneapolis Police Solve Crimes?</h4>
+            <p>
+                According to <a href="https://www.cato.org/survey-reports/policing-america" target="_blank">one survey</a>,
+                the biggest expectation that the public has for police is the investigation of violent crime. But does policing
+                actually deliver the results that we expect?
+            </p>
+            <p>
+                In short: <strong>no</strong>. Police use the term
+                <a href="https://en.wikipedia.org/wiki/Clearance_rate" target="_blank">"clearance rate"</a>
+                to describe the percentage of crimes
+                for which a charge is made against the alleged perpetrator. In other words: has the crime been potentially
+                solved? ("Potentially," because
+                <a href="https://www.law.umich.edu/special/exoneration/Pages/about.aspx" target="_blank">thousands of convictions are wrongful</a>,
+                let alone charges).
+            </p>
+            <p>
+                Several investigations into violent crime in Minneapolis in the last ten years indicate that
+                clearance rates are low for violent cimes.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <h5>Citations</h5>
+            <ul>
+                <li>
+                    Shout out to
+                    <a href="https://mndaily.com/264417/opinion/we-need-to-re-energize-to-change-public-safety/" target="_blank">
+                        Cody Hoerning's editorial in the MN Daily
+                    </a>
+                    for links to crime clearance data.
+                </li>
+                <li>
+                    <a href="http://www.murderdata.org/p/blog-page.html?m=1" target="_blank">Murder Accountability project</a>
+                    on murder clearance rates. Select State=Minnesota and Agency=Minneapolis to pull up local data.
+                </li>
+                <li>
+                    <a href="https://www.npr.org/2015/03/30/395799413/how-many-crimes-do-your-police-clear-now-you-can-find-out" target="_blank">NPR violence crime analysis</a>
+                    for violent crime clearance rates
+                </li>
+                <li>
+                    <a href="https://www.startribune.com/minneapolis-police-discover-1-700-untested-rape-kits-spanning-30-years/564989082/">Star Tribune</a>
+                    on untested rape kits, and its excellent
+                    <a href="https://www.startribune.com/denied-justice-series-when-rape-is-reported-and-nothing-happens-minnesota-police-sexual-assault-investigations/487400761/" target="_blank">
+                        Denied Justice: When rape is reported and nothing happens
+                    </a>
+                    investigative series.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <footer>
+            Public use of data and references found here is encouraged.
+            Questions or collaboration?
+            <a href="mailto:jessemortenson+safetydata@gmail.com">Contact Jesse Mortenson</a>
+        </footer>
+    </div>
+</div>
+
+<script src="js/mpdata.js"></script>
+<!--<script src="https://d3js.org/d3.v5.min.js"></script>-->
+<!--<script src="https://d3js.org/d3-time.v2.min.js"></script>-->
+<!--<script src="https://unpkg.com/d3-sankey@0"></script>-->
+<script type="text/javascript">
+  drawCharts() {
+    // nothing
+  }
+
+  // load chart when DOM is ready
+  if (document.readyState!=='loading') drawCharts();
+  else if (document.addEventListener) document.addEventListener('DOMContentLoaded', drawCharts);
+  else document.attachEvent('onreadystatechange', function(){
+      if (document.readyState==='complete') drawCharts();
+    });
+</script>
+</body>
+</html>

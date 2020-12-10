@@ -37,6 +37,7 @@
             <li><h3><a href="officers.html">Officers</a></h3></li>
             <li><h3><a href="budget.html">Budget</a></h3></li>
             <li><h3><a href="disparities.html">Disparities</a></h3></li>
+            <li><h3><a href="crimesolving.html">Solving Crime</a></h3></li>
             <li><h3><a href="links.html">More Info</a></h3></li>
           </ul>
         </nav>
@@ -50,7 +51,7 @@
             <p>-----------------------------------<br />
             <strong>Minneapolis Police Dept</strong><br />
             -----------------------------------</p>
-            <p>Officers ............................ <a href="officers.html"><span id="officer-number">856</span></a></p>
+            <p>Officers ............................ <a href="officers.html"><span id="officer-number">725</span></a></p>
             <p>Vehicle Stops ....... <a href="disparities.html">54% Black/E African</a></p>
             <p>Vehicle Searches .... <a href="disparities.html">78% Black/E African</a></p>
             <p>Police Shooting Victims ....... <a href="disparities.html">60% Black</a></p>
@@ -58,7 +59,7 @@
             <p><br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <strong>Total:</strong> <a href="budget.html">$193 million</a>
+              <strong>Total:</strong> <a href="budget.html">$179 million</a>
             </p>
             <p>------------------------<br />
             Thank you for taxpaying!<br />
@@ -86,7 +87,7 @@
       </div>
 
       <div class="one-half column second-col">
-        <h2>What does $193* million buy us?</h2>
+        <h2>What does $179* million buy us?</h2>
         <p>
           Minneapolis has officially entered into a process of public safety transformation. A pledge to
           <em>dismantle</em> or <em>defund</em> the police. Does the Police Department produce safety? Does the economy?
@@ -109,15 +110,19 @@
         </p>
         <blockquote>
           <strong style="font-size: 4rem; float: left; line-height: 24px">*</strong> <em>single numbers hide complication</em>.
-          <br />$193m represents the original 2020 budget for Minneapolis Police
+          <br />$179 represents the Mayor's proposed 2021 budget for Minneapolis Police
           Department. But it excludes the department that provides 911 service, which you may consider part of
-          "Police." And that budget number has already been revised, in July. And a new budget has been proposed for
-          2021. <a href="budget.html">Jump into Budget data</a>.
+          "Police." And that number is pending the outcome of a policy battle right now. <a href="budget.html">Jump into Budget data</a>.
         </blockquote>
 
         <div class="progress">
           <h4>Updates</h4>
           <p><em>My progress getting to the bottom of how we attempt to produce "safety"</em></p>
+
+          <div class="entry">
+            <h5>12/9/20</h5>
+            Added a page on <a href="crimesolving.html">the low rates of violent crimes being solved</a> in Minneapolis.
+          </div>
 
           <div class="entry">
             <h5>12/2/20</h5>
@@ -207,7 +212,7 @@
   <script type="text/javascript">
     const frontPageEvents = () => {
       const animateOfficerNumber = () => {
-        const numbers = [650, 850, 856, 750, 743, 750];
+        const numbers = [725, 650, 850, 856, 750, 743, 750];
         const officerNumberElem = document.querySelector('#officer-number');
         const currentNumber = Number.parseInt(officerNumberElem.textContent, 10);
         const getRandomNumber = () => numbers[Math.floor(Math.random() * numbers.length)];
